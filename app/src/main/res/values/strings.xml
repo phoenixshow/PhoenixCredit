@@ -3,6 +3,7 @@
     <string name="home">首页</string>
     <string name="invest">投资</string>
     <string name="me">我的</string>
-    <string name="my_assets">我的资产</string>
     <string name="more">更多</string>
+    <string name="my_assets">我的资产</string>
+    <string name="click_again">再点击一次，退出当前应用</string>
 </resources>

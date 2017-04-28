@@ -1,9 +1,12 @@
 package com.phoenix.credit.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -23,6 +26,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int WHAT_RESET_BACK = 1;
 
     @BindView(R2.id.fl_main)
     FrameLayout flMain;
@@ -57,6 +62,18 @@ public class MainActivity extends AppCompatActivity {
     private MoreFragment moreFragment;
     private FragmentTransaction transaction;
 
+    private boolean flag = true;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case WHAT_RESET_BACK:
+                    flag = true;//复原
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick({R2.id.ll_main_home, R2.id.ll_main_invest, R2.id.ll_main_me, R2.id.ll_main_more})
     public void showTab(View view) {
-        Toast.makeText(this, "选择了具体的Tab", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "选择了具体的Tab", Toast.LENGTH_LONG).show();
         switch (view.getId()) {
             case R.id.ll_main_home://首页
                 setSelect(0);
@@ -164,5 +181,28 @@ public class MainActivity extends AppCompatActivity {
         if (moreFragment != null){
             transaction.hide(moreFragment);
         }
+    }
+
+    //重写onKeyUp()，实现连续两次点击方可退出当前应用
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && flag){
+            Toast.makeText(this, R.string.click_again, Toast.LENGTH_LONG).show();
+            flag = false;
+            //发送延迟消息
+            handler.sendEmptyMessageDelayed(WHAT_RESET_BACK, 2000);
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
+    //为了避免出现内存的泄漏，需要在onDestroy()中，移除所有未被执行的消息
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        //方式一：移除指定ID的所有消息
+//        handler.removeMessages(WHAT_RESET_BACK);
+        //方式二：移除所有的未被执行的消息
+        handler.removeCallbacksAndMessages(null);
     }
 }
