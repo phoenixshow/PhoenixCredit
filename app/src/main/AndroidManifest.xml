@@ -3,6 +3,7 @@
     package="com.phoenix.credit">
 
     <application
+        android:name=".common.PhoenixApplication"
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"

@@ -6,6 +6,7 @@ import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.phoenix.credit.R;
 import com.phoenix.credit.R2;
+import com.phoenix.credit.common.ActivityManager;
 import com.phoenix.credit.fragment.HomeFragment;
 import com.phoenix.credit.fragment.InvestFragment;
 import com.phoenix.credit.fragment.MeFragment;
@@ -80,8 +82,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        //将当前的activity添加到ActivityManager中
+        ActivityManager.getInstance().add(this);
+
         //默认显示首页
         setSelect(0);
+        
+        //模拟异常
+        String str = null;
+        if (str.equals("abc")){
+            Log.e("TAG", "onCreate--------->");
+        }
     }
 
     @OnClick({R2.id.ll_main_home, R2.id.ll_main_invest, R2.id.ll_main_me, R2.id.ll_main_more})

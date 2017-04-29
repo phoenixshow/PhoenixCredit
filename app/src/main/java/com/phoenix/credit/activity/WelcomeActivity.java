@@ -1,7 +1,10 @@
 package com.phoenix.credit.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.phoenix.credit.R;
 import com.phoenix.credit.common.ActivityManager;
+import com.phoenix.credit.utils.UIUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,10 +26,13 @@ import butterknife.ButterKnife;
  */
 
 public class WelcomeActivity extends AppCompatActivity {
+
     @BindView(R.id.iv_welcome_icon)
     ImageView ivWelcomeIcon;
     @BindView(R.id.rl_welcome)
     RelativeLayout rlWelcome;
+
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +55,7 @@ public class WelcomeActivity extends AppCompatActivity {
         alphaAnimation.setDuration(3000);
         alphaAnimation.setInterpolator(new AccelerateInterpolator());//设置动画的变化率
 
-        //方式一：
+        /*//方式一：
         alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -66,21 +73,20 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onAnimationRepeat(Animation animation) {
 
             }
-        });
-//        //方式二：使用handler
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-//                startActivity(intent);
-////                finish();//销毁当前页面
-//                //结束activity的显示，并从栈空间中移除
-//                ActivityManager.getInstance().remove(WelcomeActivity.this);
-//            }
-//        }, 3000);
+        });*/
+        //方式二：使用handler
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+                startActivity(intent);
+//                finish();//销毁当前页面
+                //结束activity的显示，并从栈空间中移除
+                ActivityManager.getInstance().remove(WelcomeActivity.this);
+            }
+        }, 3000);
 
         //启动动画
         rlWelcome.startAnimation(alphaAnimation);
-
     }
 }
