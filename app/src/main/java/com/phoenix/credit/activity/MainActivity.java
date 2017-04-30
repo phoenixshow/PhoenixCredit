@@ -88,11 +88,11 @@ public class MainActivity extends AppCompatActivity {
         //默认显示首页
         setSelect(0);
         
-        //模拟异常
+        /*//模拟异常
         String str = null;
         if (str.equals("abc")){
             Log.e("TAG", "onCreate--------->");
-        }
+        }*/
     }
 
     @OnClick({R2.id.ll_main_home, R2.id.ll_main_invest, R2.id.ll_main_me, R2.id.ll_main_more})

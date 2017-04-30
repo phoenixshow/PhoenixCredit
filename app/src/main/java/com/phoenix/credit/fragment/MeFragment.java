@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.phoenix.credit.R;
+import com.phoenix.credit.utils.UIUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +32,7 @@ public class MeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = View.inflate(getActivity(), R.layout.fragment_me, null);
+        View view = UIUtils.getView(R.layout.fragment_me);
         unbinder = ButterKnife.bind(this, view);
         initTitle();
         return view;

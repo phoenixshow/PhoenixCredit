@@ -25,7 +25,7 @@ public class PhoenixApplication extends Application {
         mainThread = Thread.currentThread();//实例化当前Application的线程即为主线程
         mainThreadId = android.os.Process.myTid();//获取当前线程的id
 
-        //设置未捕获异常的处理器
-        CrashHandler.getInstance().init();
+//        //设置未捕获异常的处理器
+//        CrashHandler.getInstance().init();
     }
 }
