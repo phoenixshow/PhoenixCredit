@@ -34,4 +34,5 @@ dependencies {
     compile 'com.alibaba:fastjson:1.1.56.android'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile project(':ViewPagerIndicator')
+    compile 'com.youth.banner:banner:1.4.9'
 }

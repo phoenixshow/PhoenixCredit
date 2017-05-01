@@ -8,4 +8,5 @@ public class Image {
     public String ID;
     public String IMAPAURL;
     public String IMAURL;
+    public String IMATITLE;
 }

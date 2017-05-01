@@ -19,18 +19,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 >
-                <android.support.v4.view.ViewPager
+                <com.youth.banner.Banner
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/vp_home"
-                    />
-                <com.viewpagerindicator.CirclePageIndicator
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal|bottom"
-                    android:id="@+id/cpi_home_indicator"
+                    android:layout_height="150dp"
+                    android:id="@+id/banner"
                     />
             </FrameLayout>
             <TextView
