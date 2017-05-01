@@ -30,18 +30,10 @@ public class ActivityManager {
         }
     }
 
-    //插曲：[12,3,44,6,332,65,-56,1]
     //删除指定的activity
     public void remove(Activity activity){
         if(activity != null){
-//            for(int i = 0; i < activityStack.size(); i++) {
-//                Activity currentActivity = activityStack.get(i);
-//                if(currentActivity.getClass().equals(activity.getClass())){
-//                    currentActivity.finish();//销毁当前的activity
-//                    activityStack.remove(i);//从栈空间移除
-//                }
-//            }
-
+            //正向遍历会有问题，应该采用反向遍历
             for(int i = activityStack.size() - 1;i >= 0;i--){
                 Activity currentActivity = activityStack.get(i);
                 if(currentActivity.getClass().equals(activity.getClass())){
@@ -52,15 +44,9 @@ public class ActivityManager {
         }
     }
 
-    //删除当前的activity
+    //删除当前（栈顶）的activity
     public void removeCurrent(){
-        //方式一：
-//        Activity activity = activityStack.get(activityStack.size() - 1);
-//        activity.finish();
-//        activityStack.remove(activityStack.size() - 1);
-
-        //方式二：
-        Activity activity = activityStack.lastElement();
+        Activity activity = activityStack.lastElement();//相当于activityStack.get(activityStack.size() - 1)
         activity.finish();
         activityStack.remove(activity);
     }

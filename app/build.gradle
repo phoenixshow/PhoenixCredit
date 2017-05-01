@@ -32,4 +32,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'com.alibaba:fastjson:1.1.56.android'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile project(':ViewPagerIndicator')
 }

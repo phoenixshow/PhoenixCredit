@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -22,6 +23,7 @@ import com.phoenix.credit.fragment.HomeFragment;
 import com.phoenix.credit.fragment.InvestFragment;
 import com.phoenix.credit.fragment.MeFragment;
 import com.phoenix.credit.fragment.MoreFragment;
+import com.phoenix.credit.utils.UIUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -97,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick({R2.id.ll_main_home, R2.id.ll_main_invest, R2.id.ll_main_me, R2.id.ll_main_more})
     public void showTab(View view) {
-//        Toast.makeText(this, "选择了具体的Tab", Toast.LENGTH_LONG).show();
         switch (view.getId()) {
             case R.id.ll_main_home://首页
                 setSelect(0);
@@ -134,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 transaction.show(homeFragment);
                 //改变选中项的图片和文本颜色的变化
                 ivMainHome.setImageResource(R.drawable.bottom02);
-                tvMainHome.setTextColor(getResources().getColor(R.color.home_back_selected));
+                tvMainHome.setTextColor(UIUtils.getColor(R.color.home_back_selected));
                 break;
             case 1:
                 if (investFragment == null){
@@ -143,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 transaction.show(investFragment);
                 ivMainInvest.setImageResource(R.drawable.bottom04);
-                tvMainInvest.setTextColor(getResources().getColor(R.color.home_back_selected));
+                tvMainInvest.setTextColor(UIUtils.getColor(R.color.home_back_selected));
                 break;
             case 2:
                 if (meFragment == null){
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 transaction.show(meFragment);
                 ivMainMe.setImageResource(R.drawable.bottom06);
-                tvMainMe.setTextColor(getResources().getColor(R.color.home_back_selected01));
+                tvMainMe.setTextColor(UIUtils.getColor(R.color.home_back_selected01));
                 break;
             case 3:
                 if (moreFragment == null){
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 transaction.show(moreFragment);
                 ivMainMore.setImageResource(R.drawable.bottom08);
-                tvMainMore.setTextColor(getResources().getColor(R.color.home_back_selected));
+                tvMainMore.setTextColor(UIUtils.getColor(R.color.home_back_selected));
                 break;
         }
         transaction.commit();//提交事务
@@ -173,10 +174,12 @@ public class MainActivity extends AppCompatActivity {
         ivMainMe.setImageResource(R.drawable.bottom05);
         ivMainMore.setImageResource(R.drawable.bottom07);
 
-        tvMainHome.setTextColor(getResources().getColor(R.color.home_back_unselected));
-        tvMainInvest.setTextColor(getResources().getColor(R.color.home_back_unselected));
-        tvMainMe.setTextColor(getResources().getColor(R.color.home_back_unselected));
-        tvMainMore.setTextColor(getResources().getColor(R.color.home_back_unselected));
+        tvMainHome.setTextColor(UIUtils.getColor(R.color.home_back_unselected));
+        tvMainInvest.setTextColor(UIUtils.getColor(R.color.home_back_unselected));
+        tvMainMe.setTextColor(UIUtils.getColor(R.color.home_back_unselected));
+        tvMainMore.setTextColor(UIUtils.getColor(R.color.home_back_unselected));
+//        //这种方式也可以
+//        tvMainMore.setTextColor(ContextCompat.getColor(this, R.color.home_back_unselected));
     }
 
     private void hideFragments() {

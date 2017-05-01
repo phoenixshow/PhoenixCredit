@@ -53,7 +53,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private void setAnimation() {
         AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);//0：完全透明  1：完全不透明
         alphaAnimation.setDuration(3000);
-        alphaAnimation.setInterpolator(new AccelerateInterpolator());//设置动画的变化率
+        alphaAnimation.setInterpolator(new AccelerateInterpolator());//设置动画的变化率，可以匀速，也可以变速，这里是加速动画
 
         /*//方式一：
         alphaAnimation.setAnimationListener(new Animation.AnimationListener() {

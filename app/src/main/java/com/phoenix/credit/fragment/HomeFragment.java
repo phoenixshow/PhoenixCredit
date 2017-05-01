@@ -3,6 +3,7 @@ package com.phoenix.credit.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,15 +17,15 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.phoenix.credit.R;
+import com.phoenix.credit.R2;
 import com.phoenix.credit.bean.Image;
 import com.phoenix.credit.bean.Index;
 import com.phoenix.credit.bean.Product;
 import com.phoenix.credit.common.AppNetConfig;
 import com.phoenix.credit.utils.UIUtils;
-
-import org.json.JSONArray;
+import com.squareup.picasso.Picasso;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -39,19 +40,22 @@ import cz.msebera.android.httpclient.Header;
  */
 
 public class HomeFragment extends Fragment {
-    @BindView(R.id.iv_title_back)
+    @BindView(R2.id.iv_title_back)
     ImageView ivTitleBack;
-    @BindView(R.id.iv_title_setting)
+    @BindView(R2.id.iv_title_setting)
     ImageView ivTitleSetting;
-    @BindView(R.id.tv_title)
+    @BindView(R2.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.tv_home_product)
+    @BindView(R2.id.tv_home_product)
     TextView tvHomeProduct;
-    @BindView(R.id.tv_home_yearrate)
+    @BindView(R2.id.tv_home_yearrate)
     TextView tvHomeYearrate;
-    @BindView(R.id.vp_home)
+    @BindView(R2.id.vp_home)
     ViewPager vpHome;
+    @BindView(R2.id.cpi_home_indicator)
+    CirclePageIndicator cpiHomeIndicator;
     Unbinder unbinder;
+    private Index index;
 
     @Nullable
     @Override
@@ -69,7 +73,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void initData() {
-        final Index index = new Index();
+        index = new Index();
         AsyncHttpClient client = new AsyncHttpClient();
         final String url = AppNetConfig.INDEX;
         Log.e("TAG", "initData--------->url:" + url);
@@ -79,7 +83,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
-                    String result = new String(responseBody,"utf-8");
+                    String result = new String(responseBody, "utf-8");
                     //解析Json数据
                     JSONObject jsonObject = JSON.parseObject(result);
                     //解析Json对象
@@ -94,6 +98,11 @@ public class HomeFragment extends Fragment {
                     //更新页面数据
                     tvHomeProduct.setText(product.name);
                     tvHomeYearrate.setText(product.yearRate + "%");
+
+                    //设置ViewPager
+                    vpHome.setAdapter(new MyAdapter());
+                    //设置小圆圈的显示
+                    cpiHomeIndicator.setViewPager(vpHome);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -118,5 +127,39 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    class MyAdapter extends PagerAdapter {
+
+        @Override
+        public int getCount() {
+            List<Image> images = index.images;
+            return images == null ? 0 : images.size();
+        }
+
+        //界面中显示的视图View是否是当前Object创建的
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        //实例化
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            ImageView imageView = new ImageView(getActivity());
+            //1.ImageView显示图片
+            String imgurl = index.images.get(position).IMAURL;
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            Log.e("TAG", "instantiateItem--------->" + AppNetConfig.BASE_URL + imgurl);
+            Picasso.with(getActivity()).load(AppNetConfig.BASE_URL + imgurl).into(imageView);//使用Picasso联网下载并缓存图片
+            //2.ImageView添加到容器中
+            container.addView(imageView);
+            return imageView;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);//移除操作
+        }
     }
 }

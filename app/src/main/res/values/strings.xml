@@ -7,4 +7,10 @@
     <string name="my_assets">我的资产</string>
     <string name="click_again">再点击一次，退出当前应用</string>
     <string name="credit_finance">惠信金融</string>
+
+    <string-array name="invest_tab">
+        <item>全部理财</item>
+        <item>推荐理财</item>
+        <item>热门理财</item>
+    </string-array>
 </resources>
