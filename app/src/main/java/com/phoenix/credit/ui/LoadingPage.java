@@ -107,6 +107,7 @@ public abstract class LoadingPage extends FrameLayout {
         if (TextUtils.isEmpty(url)){
             resultState = ResultState.SUCCESS;
             resultState.setContent("");
+            loadImage();//为了修改state_current，并且决定加载哪个页面：showSafePage()
             return;
         }
 
