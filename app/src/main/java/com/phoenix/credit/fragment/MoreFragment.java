@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.phoenix.credit.R;
+import com.phoenix.credit.common.BaseFragment;
 import com.phoenix.credit.utils.UIUtils;
 
 import butterknife.BindView;
@@ -20,33 +21,27 @@ import butterknife.Unbinder;
  * Created by flashing on 2017/4/28.
  */
 
-public class MoreFragment extends Fragment {
+public class MoreFragment extends BaseFragment {
     @BindView(R.id.iv_title_back)
     ImageView ivTitleBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.iv_title_setting)
     ImageView ivTitleSetting;
-    Unbinder unbinder;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = UIUtils.getView(R.layout.fragment_more);
-        unbinder = ButterKnife.bind(this, view);
-        initTitle();
-        return view;
+    protected int getLayoutId() {
+        return R.layout.fragment_more;
     }
 
-    private void initTitle() {
+    @Override
+    protected void initTitle() {
         ivTitleBack.setVisibility(View.GONE);
         tvTitle.setText(R.string.more);
         ivTitleSetting.setVisibility(View.GONE);
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    protected void initData() {
     }
 }

@@ -1,14 +1,9 @@
 package com.phoenix.credit.fragment;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +18,7 @@ import com.phoenix.credit.bean.Image;
 import com.phoenix.credit.bean.Index;
 import com.phoenix.credit.bean.Product;
 import com.phoenix.credit.common.AppNetConfig;
+import com.phoenix.credit.common.BaseFragment;
 import com.phoenix.credit.ui.RoundProgress;
 import com.phoenix.credit.utils.UIUtils;
 import com.squareup.picasso.Picasso;
@@ -36,14 +32,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by flashing on 2017/4/28.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
     @BindView(R2.id.iv_title_back)
     ImageView ivTitleBack;
     @BindView(R2.id.iv_title_setting)
@@ -58,7 +52,7 @@ public class HomeFragment extends Fragment {
     Banner banner;
     @BindView(R.id.rp_home)
     RoundProgress rpHome;
-    Unbinder unbinder;
+
     private Index index;
     private int currentProress;
 
@@ -76,21 +70,20 @@ public class HomeFragment extends Fragment {
         }
     };
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = UIUtils.getView(R.layout.fragment_home);
-        unbinder = ButterKnife.bind(this, view);
-
-        //初始化Title
-        initTitle();
-
-        //初始化数据
-        initData();
-        return view;
+    protected void initTitle() {
+        ivTitleBack.setVisibility(View.GONE);
+        tvTitle.setText(R.string.home);
+        ivTitleSetting.setVisibility(View.GONE);
     }
 
-    private void initData() {
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
+    protected void initData() {
         index = new Index();
         AsyncHttpClient client = new AsyncHttpClient();
         final String url = AppNetConfig.INDEX;
@@ -157,18 +150,6 @@ public class HomeFragment extends Fragment {
                 Log.e("TAG", "onFailure--------->" + error);
             }
         });
-    }
-
-    private void initTitle() {
-        ivTitleBack.setVisibility(View.GONE);
-        tvTitle.setText(R.string.home);
-        ivTitleSetting.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     public class GlideImageLoader extends ImageLoader {
