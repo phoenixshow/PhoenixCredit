@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.loopj.android.http.RequestParams;
 import com.phoenix.credit.R;
 import com.phoenix.credit.common.BaseFragment;
 import com.phoenix.credit.utils.UIUtils;
@@ -35,13 +36,24 @@ public class MoreFragment extends BaseFragment {
     }
 
     @Override
+    protected String getUrl() {
+        return null;
+    }
+
+    @Override
+    protected RequestParams getParams() {
+        return null;
+    }
+
+    @Override
+    protected void initData(String content) {
+
+    }
+
+    @Override
     protected void initTitle() {
         ivTitleBack.setVisibility(View.GONE);
         tvTitle.setText(R.string.more);
         ivTitleSetting.setVisibility(View.GONE);
-    }
-
-    @Override
-    protected void initData() {
     }
 }

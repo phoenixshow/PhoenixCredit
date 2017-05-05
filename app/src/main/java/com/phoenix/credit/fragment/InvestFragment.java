@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.loopj.android.http.RequestParams;
 import com.phoenix.credit.R;
 import com.phoenix.credit.common.BaseFragment;
 
@@ -27,13 +28,23 @@ public class InvestFragment extends BaseFragment {
     }
 
     @Override
+    protected String getUrl() {
+        return null;
+    }
+
+    @Override
+    protected RequestParams getParams() {
+        return null;
+    }
+
+    @Override
+    protected void initData(String content) {
+    }
+
+    @Override
     protected void initTitle() {
         ivTitleBack.setVisibility(View.GONE);
         tvTitle.setText(R.string.invest);
         ivTitleSetting.setVisibility(View.GONE);
-    }
-
-    @Override
-    protected void initData() {
     }
 }

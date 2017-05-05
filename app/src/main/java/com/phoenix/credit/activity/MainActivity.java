@@ -133,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //显示当前的Fragment
                 transaction.show(homeFragment);
+                //错误的调用位置，这时生命周期方法BaseFragment中的onCreateView还没有调用，LoadingPage还未初始化就调用它的show方法会空指针
+//                homeFragment.show();
                 //改变选中项的图片和文本颜色的变化
                 ivMainHome.setImageResource(R.drawable.bottom02);
                 tvMainHome.setTextColor(UIUtils.getColor(R.color.home_back_selected));
