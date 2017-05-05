@@ -77,11 +77,11 @@
                     android:textColor="@color/home_back_unselected"
                     />
             </LinearLayout>
-            <Button
+            <com.phoenix.credit.ui.RoundProgress
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:text="我是圆形进度条"
                 android:layout_marginTop="10dp"
+                android:id="@+id/rp_home"
                 />
             <LinearLayout
                 android:layout_width="wrap_content"

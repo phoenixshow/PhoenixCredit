@@ -8,3 +8,5 @@
 /captures
 .externalNativeBuild
 build
+/import-summary.txt
+.idea
