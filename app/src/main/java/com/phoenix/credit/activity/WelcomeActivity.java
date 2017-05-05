@@ -37,8 +37,8 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //去掉窗口标题
-        getSupportActionBar().hide();
+//        //去掉窗口标题
+//        getSupportActionBar().hide();
         //隐藏顶部的状态栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 

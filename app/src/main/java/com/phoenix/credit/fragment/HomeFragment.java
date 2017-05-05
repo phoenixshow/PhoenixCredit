@@ -1,8 +1,8 @@
 package com.phoenix.credit.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -23,6 +23,7 @@ import com.phoenix.credit.bean.Image;
 import com.phoenix.credit.bean.Index;
 import com.phoenix.credit.bean.Product;
 import com.phoenix.credit.common.AppNetConfig;
+import com.phoenix.credit.ui.RoundProgress;
 import com.phoenix.credit.utils.UIUtils;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
@@ -53,10 +54,27 @@ public class HomeFragment extends Fragment {
     TextView tvHomeProduct;
     @BindView(R2.id.tv_home_yearrate)
     TextView tvHomeYearrate;
-    Unbinder unbinder;
     @BindView(R2.id.banner)
     Banner banner;
+    @BindView(R.id.rp_home)
+    RoundProgress rpHome;
+    Unbinder unbinder;
     private Index index;
+    private int currentProress;
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            rpHome.setMax(100);
+            for (int i = 0; i < currentProress; i++) {
+                rpHome.setProgress(i + 1);
+                SystemClock.sleep(20);//延时，别太快了
+                //强制重绘
+//                rpHome.invalidate();//只有主线程才可以如此调用
+                rpHome.postInvalidate();//主线程、分线程都可以如此调用
+            }
+        }
+    };
 
     @Nullable
     @Override
@@ -97,6 +115,10 @@ public class HomeFragment extends Fragment {
                     //更新页面数据
                     tvHomeProduct.setText(product.name);
                     tvHomeYearrate.setText(product.yearRate + "%");
+                    //获取数据中的进度值
+                    currentProress = Integer.parseInt(index.product.progress);
+                    //在分线程中，实现进度的动态变化
+                    new Thread(runnable).start();
 
                     //加载显示图片
                     //设置banner样式
@@ -107,7 +129,7 @@ public class HomeFragment extends Fragment {
                     ArrayList<String> imagesUrl = new ArrayList<>(index.images.size());
                     ArrayList<String> imagesTitle = new ArrayList<>(index.images.size());
                     for (int i = 0; i < index.images.size(); i++) {
-                        imagesUrl.add(AppNetConfig.BASE_URL+index.images.get(i).IMAURL);
+                        imagesUrl.add(AppNetConfig.BASE_URL + index.images.get(i).IMAURL);
                         imagesTitle.add(index.images.get(i).IMATITLE);
                     }
                     banner.setImages(imagesUrl);

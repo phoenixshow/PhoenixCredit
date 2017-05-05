@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
     <include layout="@layout/common_title"/>
     <ScrollView
         android:layout_width="match_parent"
@@ -81,6 +81,13 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="10dp"
+                app:roundColor="@color/divider_line"
+                app:roundProgressColor="@color/round_red_common"
+                app:textColor="@color/title_back"
+                app:textSize="20sp"
+                app:roundWith="10dp"
+                app:max="100"
+                app:progress="70"
                 android:id="@+id/rp_home"
                 />
             <LinearLayout
