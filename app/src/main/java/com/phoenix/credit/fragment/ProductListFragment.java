@@ -8,6 +8,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.loopj.android.http.RequestParams;
 import com.phoenix.credit.R;
 import com.phoenix.credit.adapter.ProductAdapter;
+import com.phoenix.credit.adapter.ProductAdapter1;
+import com.phoenix.credit.adapter.ProductAdapter2;
+import com.phoenix.credit.adapter.ProductAdapter3;
 import com.phoenix.credit.bean.Product;
 import com.phoenix.credit.common.AppNetConfig;
 import com.phoenix.credit.common.BaseFragment;
@@ -42,9 +45,18 @@ public class ProductListFragment extends BaseFragment {
             //获取集合数据
             productList = JSON.parseArray(data, Product.class);
 
-            //方式一：
-            ProductAdapter productAdapter = new ProductAdapter(productList);
-            lvProductList.setAdapter(productAdapter);//显示列表
+//            //方式一：没有抽取
+//            ProductAdapter productAdapter = new ProductAdapter(productList);
+//            lvProductList.setAdapter(productAdapter);//显示列表
+//            //方式二：抽取了，但是抽取力度小（相较方法三可以作为选择）
+//            ProductAdapter1 productAdapter1 = new ProductAdapter1(productList);
+//            lvProductList.setAdapter(productAdapter1);//显示列表
+//            //方式三：抽取了，但是没有使用ViewHolder，getView()优化得不够
+//            ProductAdapter2 productAdapter2 = new ProductAdapter2(productList);
+//            lvProductList.setAdapter(productAdapter2);//显示列表
+            //方式四、抽取了，最好的方式
+            ProductAdapter3 productAdapter3 = new ProductAdapter3(productList);
+            lvProductList.setAdapter(productAdapter3);//显示列表
         }
     }
 
