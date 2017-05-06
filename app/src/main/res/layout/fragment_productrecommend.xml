@@ -4,11 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <TextView
+    <com.phoenix.credit.ui.randomLayout.StellarMap
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="推荐理财"
-        android:textSize="40sp"
-        android:textColor="@color/title_back"
+        android:id="@+id/sm_product_recommend"
         />
 </LinearLayout>
