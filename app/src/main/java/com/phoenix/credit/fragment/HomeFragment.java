@@ -2,6 +2,7 @@ package com.phoenix.credit.fragment;
 
 import android.content.Context;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -65,51 +66,55 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initData(String content) {
-        index = new Index();
-        //解析Json数据
-        JSONObject jsonObject = JSON.parseObject(content);
-        //解析Json对象
-        String proInfo = jsonObject.getString("proInfo");
-        Product product = JSON.parseObject(proInfo, Product.class);
-        //解析Json数组
-        String imageArr = jsonObject.getString("imageArr");
-        List<Image> images = jsonObject.parseArray(imageArr, Image.class);
-        index.product = product;
-        index.images = images;
+        if (!TextUtils.isEmpty(content)){
+            index = new Index();
+            //解析Json数据
+            JSONObject jsonObject = JSON.parseObject(content);
+            //解析Json对象
+            String proInfo = jsonObject.getString("proInfo");
+            Product product = JSON.parseObject(proInfo, Product.class);
+            //解析Json数组
+            String imageArr = jsonObject.getString("imageArr");
+            List<Image> images = jsonObject.parseArray(imageArr, Image.class);
+            index.product = product;
+            index.images = images;
 
-        //更新页面数据
-        tvHomeProduct.setText(product.name);
-        tvHomeYearrate.setText(product.yearRate + "%");
-        //获取数据中的进度值
-        currentProress = Integer.parseInt(index.product.progress);
-        //在分线程中，实现进度的动态变化
-        new Thread(runnable).start();
+            //更新页面数据
+            tvHomeProduct.setText(product.name);
+            tvHomeYearrate.setText(product.yearRate + "%");
+            //获取数据中的进度值
+            currentProress = Integer.parseInt(index.product.progress);
+            //在分线程中，实现进度的动态变化
+            new Thread(runnable).start();
 
-        //加载显示图片
-        //设置banner样式
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);//显示圆形指示器和标题
-        //设置图片加载器
-        banner.setImageLoader(new GlideImageLoader());
-        //设置图片地址构成的集合
-        ArrayList<String> imagesUrl = new ArrayList<>(index.images.size());
-        ArrayList<String> imagesTitle = new ArrayList<>(index.images.size());
-        for (int i = 0; i < index.images.size(); i++) {
-            imagesUrl.add(AppNetConfig.BASE_URL + index.images.get(i).IMAURL);
-            imagesTitle.add(index.images.get(i).IMATITLE);
+            //加载显示图片
+            //设置banner样式
+            banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);//显示圆形指示器和标题
+            //设置图片加载器
+            banner.setImageLoader(new GlideImageLoader());
+            //设置图片地址构成的集合
+            ArrayList<String> imagesUrl = new ArrayList<>(index.images.size());
+            ArrayList<String> imagesTitle = new ArrayList<>(index.images.size());
+            for (int i = 0; i < index.images.size(); i++) {
+                imagesUrl.add(AppNetConfig.BASE_URL + index.images.get(i).IMAURL);
+                imagesTitle.add(index.images.get(i).IMATITLE);
+            }
+            banner.setImages(imagesUrl);
+            //设置banner动画效果
+            banner.setBannerAnimation(Transformer.DepthPage);
+            //设置标题集合（当banner样式有显示title时）
+            banner.setBannerTitles(imagesTitle);
+            //设置自动轮播，默认为true
+            banner.isAutoPlay(true);
+            //设置轮播时间
+            banner.setDelayTime(1500);
+            //设置指示器位置（当banner模式中有指示器时）
+            banner.setIndicatorGravity(BannerConfig.CENTER);
+            //banner设置方法全部调用完毕时最后调用
+            banner.start();
+        }else {
+            //TODO 可加载缓存的内容
         }
-        banner.setImages(imagesUrl);
-        //设置banner动画效果
-        banner.setBannerAnimation(Transformer.DepthPage);
-        //设置标题集合（当banner样式有显示title时）
-        banner.setBannerTitles(imagesTitle);
-        //设置自动轮播，默认为true
-        banner.isAutoPlay(true);
-        //设置轮播时间
-        banner.setDelayTime(1500);
-        //设置指示器位置（当banner模式中有指示器时）
-        banner.setIndicatorGravity(BannerConfig.CENTER);
-        //banner设置方法全部调用完毕时最后调用
-        banner.start();
     }
 
     @Override
@@ -127,6 +132,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected String getUrl() {
         return AppNetConfig.INDEX;
+//        return null;
     }
 
     @Override
