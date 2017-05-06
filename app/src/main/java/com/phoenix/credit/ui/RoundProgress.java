@@ -65,7 +65,7 @@ public class RoundProgress extends View {
         roundColor = typedArray.getColor(R.styleable.RoundProgress_roundColor, Color.GRAY);
         roundProgressColor = typedArray.getColor(R.styleable.RoundProgress_roundProgressColor, Color.RED);
         textColor = typedArray.getColor(R.styleable.RoundProgress_textColor, Color.GREEN);
-        roundWidth = typedArray.getDimension(R.styleable.RoundProgress_roundWith, UIUtils.dp2px(10));
+        roundWidth = typedArray.getDimension(R.styleable.RoundProgress_roundWidth, UIUtils.dp2px(10));
         textSize = typedArray.getDimension(R.styleable.RoundProgress_textSize, UIUtils.dp2px(20));
         max = typedArray.getInteger(R.styleable.RoundProgress_max, 100);
         progress = typedArray.getInteger(R.styleable.RoundProgress_progress, 30);

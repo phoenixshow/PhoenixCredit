@@ -4,11 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <TextView
+    <com.phoenix.credit.ui.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="惠信金融壕运当头，首投返现最高达188元"
+        android:textSize="25sp"
+        android:textColor="@color/product_red_common"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:id="@+id/tv_product_title"
+        />
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="全部理财"
-        android:textSize="40sp"
-        android:textColor="@color/title_back"
+        android:dividerHeight="10dp"
+        android:divider="@color/title_text"
+        android:id="@+id/lv_product_list"
         />
 </LinearLayout>
