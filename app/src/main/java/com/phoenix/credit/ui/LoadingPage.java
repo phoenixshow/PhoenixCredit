@@ -15,6 +15,8 @@ import com.phoenix.credit.utils.UIUtils;
 
 import cz.msebera.android.httpclient.Header;
 
+import static com.phoenix.credit.common.PhoenixApplication.context;
+
 /**
  * Created by flashing on 2017/5/5.
  */
@@ -34,6 +36,7 @@ public abstract class LoadingPage extends FrameLayout {
     private View view_success;
     private LayoutParams params;
     private ResultState resultState;
+    private Context mContext;
 
     public LoadingPage(Context context) {
         this(context, null);
@@ -45,6 +48,7 @@ public abstract class LoadingPage extends FrameLayout {
 
     public LoadingPage(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.mContext = context;
         init();
     }
 
@@ -93,7 +97,8 @@ public abstract class LoadingPage extends FrameLayout {
         view_empty.setVisibility(state_current == STATE_EMPTY ? View.VISIBLE : INVISIBLE);
 
         if (view_success == null){
-            view_success = UIUtils.getView(layoutId());
+//            view_success = UIUtils.getView(layoutId());//加载布局使用的是Application
+            view_success = View.inflate(mContext, layoutId(), null);
             addView(view_success, params);
         }
 

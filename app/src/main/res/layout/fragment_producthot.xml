@@ -4,15 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <include layout="@layout/common_title"/>
-    <com.viewpagerindicator.TabPageIndicator
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tpi_invest"
-        />
-    <android.support.v4.view.ViewPager
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/vp_invest"
+        android:text="热门理财"
+        android:textSize="40sp"
+        android:textColor="@color/title_back"
         />
 </LinearLayout>
