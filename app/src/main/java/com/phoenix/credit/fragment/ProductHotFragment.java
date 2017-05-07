@@ -1,5 +1,7 @@
 package com.phoenix.credit.fragment;
 
+import android.graphics.Color;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -7,7 +9,10 @@ import com.loopj.android.http.RequestParams;
 import com.phoenix.credit.R;
 import com.phoenix.credit.common.BaseFragment;
 import com.phoenix.credit.ui.FlowLayout;
+import com.phoenix.credit.utils.DrawUtils;
 import com.phoenix.credit.utils.UIUtils;
+
+import java.util.Random;
 
 import butterknife.BindView;
 
@@ -28,7 +33,7 @@ public class ProductHotFragment extends BaseFragment {
     @Override
     protected void initData(String content) {
         for (int i = 0; i < datas.length; i++) {
-            TextView tv = new TextView(getContext());
+            final TextView tv = new TextView(getContext());
             //设置属性
             tv.setText(datas[i]);
             ViewGroup.MarginLayoutParams mp = new ViewGroup.MarginLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -43,6 +48,25 @@ public class ProductHotFragment extends BaseFragment {
 
 //            tv.setTextSize(UIUtils.dp2px(10));
             tv.setTextSize(14);
+
+            //设置背景
+            Random random = new Random();
+            int red = random.nextInt(211);
+            int green = random.nextInt(211);
+            int blue = random.nextInt(211);
+//            //设置单一背景
+//            tv.setBackground(DrawUtils.getDrawable(Color.rgb(red, green, blue), UIUtils.dp2px(5)));
+            //设置具有选择器功能的背景
+            tv.setBackground(DrawUtils.getSelector(DrawUtils.getDrawable(Color.rgb(red, green, blue), UIUtils.dp2px(5)), DrawUtils.getDrawable(Color.WHITE, UIUtils.dp2px(5))));
+
+//            //设置TextView是可点击的，如果设置了点击事件，则TextView就是可点击的
+//            tv.setClickable(true);
+            tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UIUtils.toast(tv.getText().toString(), false);
+                }
+            });
             flHot.addView(tv);
         }
     }
