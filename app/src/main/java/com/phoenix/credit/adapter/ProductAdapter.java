@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.phoenix.credit.R;
+import com.phoenix.credit.R2;
 import com.phoenix.credit.bean.Product;
 import com.phoenix.credit.ui.RoundProgress;
 import com.phoenix.credit.utils.UIUtils;
@@ -101,19 +102,19 @@ public class ProductAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @BindView(R.id.p_name)
+        @BindView(R2.id.p_name)
         TextView pName;
-        @BindView(R.id.p_money)
+        @BindView(R2.id.p_money)
         TextView pMoney;
-        @BindView(R.id.p_yearlv)
+        @BindView(R2.id.p_yearlv)
         TextView pYearlv;
-        @BindView(R.id.p_suodingdays)
+        @BindView(R2.id.p_suodingdays)
         TextView pSuodingdays;
-        @BindView(R.id.p_minzouzi)
+        @BindView(R2.id.p_minzouzi)
         TextView pMinzouzi;
-        @BindView(R.id.p_minnum)
+        @BindView(R2.id.p_minnum)
         TextView pMinnum;
-        @BindView(R.id.p_progresss)
+        @BindView(R2.id.p_progresss)
         RoundProgress pProgresss;
 
         ViewHolder(View view) {

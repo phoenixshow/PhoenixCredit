@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
 import com.phoenix.credit.R;
+import com.phoenix.credit.R2;
 import com.phoenix.credit.common.BaseFragment;
 import com.phoenix.credit.ui.FlowLayout;
 import com.phoenix.credit.utils.DrawUtils;
@@ -23,7 +24,7 @@ import static com.phoenix.credit.utils.UIUtils.dp2px;
  */
 
 public class ProductHotFragment extends BaseFragment {
-    @BindView(R.id.fl_hot)
+    @BindView(R2.id.fl_hot)
     FlowLayout flHot;
 
     private String[] datas = new String[]{"新手福利计划", "财神道90天计划", "硅谷计划", "30天理财计划", "180天理财计划", "月月升","中情局投资商业经营", "大学老师购买车辆", "屌丝下海经商计划", "美人鱼影视拍摄投资", "Android培训老师自己周转", "养猪场扩大经营",

@@ -38,6 +38,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity" android:theme="@style/StyledIndicators"/>
+        <activity android:name=".activity.LoginActivity"/>
     </application>
 
 </manifest>

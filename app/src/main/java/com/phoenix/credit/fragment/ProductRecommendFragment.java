@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
 import com.phoenix.credit.R;
+import com.phoenix.credit.R2;
 import com.phoenix.credit.common.BaseFragment;
 import com.phoenix.credit.ui.randomLayout.StellarMap;
 import com.phoenix.credit.utils.UIUtils;
@@ -28,7 +29,7 @@ import butterknife.Unbinder;
  */
 
 public class ProductRecommendFragment extends BaseFragment {
-    @BindView(R.id.sm_product_recommend)
+    @BindView(R2.id.sm_product_recommend)
     StellarMap smProductRecommend;
 
     //提供装配的数据

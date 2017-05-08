@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.phoenix.credit.R;
+import com.phoenix.credit.R2;
 import com.phoenix.credit.common.ActivityManager;
 import com.phoenix.credit.utils.UIUtils;
 
@@ -27,9 +28,9 @@ import butterknife.ButterKnife;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    @BindView(R.id.iv_welcome_icon)
+    @BindView(R2.id.iv_welcome_icon)
     ImageView ivWelcomeIcon;
-    @BindView(R.id.rl_welcome)
+    @BindView(R2.id.rl_welcome)
     RelativeLayout rlWelcome;
 
     private Handler handler = new Handler();

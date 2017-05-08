@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
 import com.phoenix.credit.R;
+import com.phoenix.credit.R2;
 import com.phoenix.credit.common.BaseFragment;
 import com.phoenix.credit.utils.UIUtils;
 
@@ -23,11 +24,11 @@ import butterknife.Unbinder;
  */
 
 public class MoreFragment extends BaseFragment {
-    @BindView(R.id.iv_title_back)
+    @BindView(R2.id.iv_title_back)
     ImageView ivTitleBack;
-    @BindView(R.id.tv_title)
+    @BindView(R2.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.iv_title_setting)
+    @BindView(R2.id.iv_title_setting)
     ImageView ivTitleSetting;
 
     @Override

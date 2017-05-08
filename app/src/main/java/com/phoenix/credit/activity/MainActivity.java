@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.phoenix.credit.R;
 import com.phoenix.credit.R2;
 import com.phoenix.credit.common.ActivityManager;
+import com.phoenix.credit.common.BaseActivity;
 import com.phoenix.credit.fragment.HomeFragment;
 import com.phoenix.credit.fragment.InvestFragment;
 import com.phoenix.credit.fragment.MeFragment;
@@ -29,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private static final int WHAT_RESET_BACK = 1;
 
@@ -79,22 +80,24 @@ public class MainActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-
-        //将当前的activity添加到ActivityManager中
-        ActivityManager.getInstance().add(this);
-
+    protected void initData() {
         //默认显示首页
         setSelect(0);
-        
+
         /*//模拟异常
         String str = null;
         if (str.equals("abc")){
             Log.e("TAG", "onCreate--------->");
         }*/
+    }
+
+    @Override
+    protected void initTitle() {
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
     }
 
     @OnClick({R2.id.ll_main_home, R2.id.ll_main_invest, R2.id.ll_main_me, R2.id.ll_main_more})

@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.loopj.android.http.RequestParams;
 import com.phoenix.credit.R;
+import com.phoenix.credit.R2;
 import com.phoenix.credit.adapter.ProductAdapter;
 import com.phoenix.credit.adapter.ProductAdapter1;
 import com.phoenix.credit.adapter.ProductAdapter2;
@@ -24,9 +25,9 @@ import butterknife.BindView;
  */
 
 public class ProductListFragment extends BaseFragment {
-    @BindView(R.id.tv_product_title)
+    @BindView(R2.id.tv_product_title)
     TextView tvProductTitle;
-    @BindView(R.id.lv_product_list)
+    @BindView(R2.id.lv_product_list)
     ListView lvProductList;
     private List<Product> productList;
 

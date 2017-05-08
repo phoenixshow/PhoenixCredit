@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.loopj.android.http.RequestParams;
 import com.phoenix.credit.R;
+import com.phoenix.credit.R2;
 import com.phoenix.credit.bean.Image;
 import com.phoenix.credit.bean.Index;
 import com.phoenix.credit.bean.Product;
@@ -32,19 +33,19 @@ import butterknife.BindView;
  * Created by flashing on 2017/4/28.
  */
 public class HomeFragment extends BaseFragment {
-    @BindView(R.id.iv_title_back)
+    @BindView(R2.id.iv_title_back)
     ImageView ivTitleBack;
-    @BindView(R.id.tv_title)
+    @BindView(R2.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.iv_title_setting)
+    @BindView(R2.id.iv_title_setting)
     ImageView ivTitleSetting;
-    @BindView(R.id.banner)
+    @BindView(R2.id.banner)
     Banner banner;
-    @BindView(R.id.tv_home_product)
+    @BindView(R2.id.tv_home_product)
     TextView tvHomeProduct;
-    @BindView(R.id.rp_home)
+    @BindView(R2.id.rp_home)
     RoundProgress rpHome;
-    @BindView(R.id.tv_home_yearrate)
+    @BindView(R2.id.tv_home_yearrate)
     TextView tvHomeYearrate;
 
     private Index index;
