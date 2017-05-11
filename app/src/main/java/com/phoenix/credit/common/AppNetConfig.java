@@ -4,7 +4,7 @@ package com.phoenix.credit.common;
  * 配置网络请求相关的地址
  */
 public class AppNetConfig {
-    public static final String IP_ADDRESS = "192.168.0.102";
+    public static final String IP_ADDRESS = "192.168.0.107";
     public static final String BASE_URL = "http://" + IP_ADDRESS + ":8080/credit/";
 
     public static final String PRODUCT = BASE_URL + "product";//访问投资

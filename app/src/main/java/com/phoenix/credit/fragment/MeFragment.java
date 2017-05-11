@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -21,8 +22,10 @@ import com.phoenix.credit.bean.User;
 import com.phoenix.credit.common.AppNetConfig;
 import com.phoenix.credit.common.BaseActivity;
 import com.phoenix.credit.common.BaseFragment;
+import com.phoenix.credit.utils.BitmapUtils;
 import com.phoenix.credit.utils.UIUtils;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,7 +101,23 @@ public class MeFragment extends BaseFragment {
         User user = ((BaseActivity)this.getActivity()).readUser();
         //2.获取对象信息，并设置给相应的视图显示
         tvMeName.setText(user.getName());
-        Picasso.with(this.getActivity()).load(AppNetConfig.BASE_URL+user.getImageurl()).into(ivMeIcon);
+        Picasso.with(this.getActivity()).load(AppNetConfig.BASE_URL+user.getImageurl()).transform(new Transformation() {
+            @Override
+            public Bitmap transform(Bitmap source) {//下载以后的内存中的Bitmap对象
+                //压缩处理
+                Bitmap bitmap = BitmapUtils.zoom(source, UIUtils.dp2px(62), UIUtils.dp2px(62));
+                //圆形处理
+                bitmap = BitmapUtils.circleBitmap(source);
+                //回收Bitmap资源
+                source.recycle();
+                return bitmap;
+            }
+
+            @Override
+            public String key() {
+                return "";//需要保证返回值不能为空，否则报错
+            }
+        }).into(ivMeIcon);
     }
 
     //给出提示：登录
