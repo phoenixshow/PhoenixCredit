@@ -8,6 +8,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -29,8 +30,10 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.phoenix.credit.R;
+import com.phoenix.credit.R2;
 import com.phoenix.credit.common.AppNetConfig;
 import com.phoenix.credit.common.BaseActivity;
+import com.phoenix.credit.common.PhoenixApplication;
 import com.phoenix.credit.utils.BitmapUtils;
 import com.phoenix.credit.utils.UIUtils;
 
@@ -87,7 +90,29 @@ public class UserInfoActivity extends BaseActivity {
         return R.layout.activity_user_info;
     }
 
-    @OnClick(R.id.tv_user_change)
+    @OnClick(R2.id.btn_user_logout)
+    public void logout(View view){//退出登录Button的回调方法
+        //1.将保存在SP中的数据清除
+        SharedPreferences sp = this.getSharedPreferences("user_info", MODE_PRIVATE);
+        sp.edit().clear().commit();//清除数据操作必须提交；提交以后，文件仍存在，只是文件中的数据被清空
+        //2.将本地保存的图片的File删除
+        File filesDir;
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+            filesDir = getExternalFilesDir("");
+        }else {
+            filesDir = getFilesDir();
+        }
+        File file = new File(filesDir, "tx.png");
+        if (file.exists()){
+            file.delete();//删除存储中的文件
+        }
+        //3.销毁所有的Activity
+        this.removeAll();
+        //4.重新进入首页面
+        this.goToActivity(MainActivity.class, null);
+    }
+
+    @OnClick(R2.id.tv_user_change)
     public void changeIcon(View view) {
         getPersimmions();
     }
