@@ -1,11 +1,19 @@
 package com.phoenix.credit.utils;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.os.Environment;
+import android.util.Base64;
+
+import com.phoenix.credit.common.PhoenixApplication;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 import static android.graphics.Bitmap.createBitmap;
 
@@ -49,5 +57,36 @@ public class BitmapUtils {
         matrix.postScale(width / source.getWidth(), height / source.getHeight());
         Bitmap bitmap = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, false);
         return bitmap;
+    }
+
+    // 将bitmap转成string类型通过Base64
+    public static String BitmapToString(Bitmap bitmap) {
+        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+        // 将bitmap压缩成30%
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, bao);
+        // 将bitmap转化为一个byte数组
+        byte[] bs = bao.toByteArray();
+        // 将byte数组用BASE64加密
+        String photoStr = Base64.encodeToString(bs, Base64.DEFAULT);
+        // 返回String
+        return photoStr;
+    }
+
+    public static Bitmap readImage() {
+        File filesDir;
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+            filesDir = PhoenixApplication.context.getExternalFilesDir("");
+        }else {
+            filesDir = PhoenixApplication.context.getFilesDir();
+        }
+        File file = new File(filesDir, "tx.png");
+        if (file.exists()){
+            //存储-->内存
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            //圆形处理
+            bitmap = BitmapUtils.circleBitmap(bitmap);
+            return bitmap;
+        }
+        return null;
     }
 }

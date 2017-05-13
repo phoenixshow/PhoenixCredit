@@ -44,8 +44,8 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     //销毁当前的Activity
-    public void removeCurrentActivity(Activity activity){
-        ActivityManager.getInstance().removeCurrent();;
+    public void removeCurrentActivity(){
+        ActivityManager.getInstance().removeCurrent();
     }
 
     //销毁所有的Activity

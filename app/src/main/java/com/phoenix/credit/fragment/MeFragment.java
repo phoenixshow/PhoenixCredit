@@ -5,11 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.os.Bundle;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +17,7 @@ import com.loopj.android.http.RequestParams;
 import com.phoenix.credit.R;
 import com.phoenix.credit.R2;
 import com.phoenix.credit.activity.LoginActivity;
+import com.phoenix.credit.activity.UserInfoActivity;
 import com.phoenix.credit.bean.User;
 import com.phoenix.credit.common.AppNetConfig;
 import com.phoenix.credit.common.BaseActivity;
@@ -27,9 +27,10 @@ import com.phoenix.credit.utils.UIUtils;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.io.File;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import butterknife.OnClick;
 
 /**
  * Created by flashing on 2017/4/28.
@@ -101,6 +102,12 @@ public class MeFragment extends BaseFragment {
         User user = ((BaseActivity)this.getActivity()).readUser();
         //2.获取对象信息，并设置给相应的视图显示
         tvMeName.setText(user.getName());
+        //判断本地是否已经保存头像的图片，如果有，则不再执行联网操作
+        boolean isExist = readImage();
+        if (isExist){
+            return;
+        }
+        //使用Picasso联网获取图片
         Picasso.with(this.getActivity()).load(AppNetConfig.BASE_URL+user.getImageurl()).transform(new Transformation() {
             @Override
             public Bitmap transform(Bitmap source) {//下载以后的内存中的Bitmap对象
@@ -138,8 +145,30 @@ public class MeFragment extends BaseFragment {
 
     @Override
     protected void initTitle() {
-        ivTitleBack.setVisibility(View.GONE);
+        ivTitleBack.setVisibility(View.INVISIBLE);//为使标题居中，不要设为GONE
         tvTitle.setText(R.string.my_assets);
-        ivTitleSetting.setVisibility(View.GONE);
+        ivTitleSetting.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick(R.id.iv_title_setting)
+    public void setting(View view){
+        //启动用户信息界面的Activity
+        ((BaseActivity)this.getActivity()).goToActivity(UserInfoActivity.class, null);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //读取本地保存的图片
+        readImage();
+    }
+
+    private boolean readImage() {
+        Bitmap bitmap = BitmapUtils.readImage();
+        if (bitmap != null){
+            ivMeIcon.setImageBitmap(bitmap);
+            return true;
+        }
+        return false;
     }
 }
