@@ -17,6 +17,7 @@ import com.loopj.android.http.RequestParams;
 import com.phoenix.credit.R;
 import com.phoenix.credit.R2;
 import com.phoenix.credit.activity.LoginActivity;
+import com.phoenix.credit.activity.RechargeActivity;
 import com.phoenix.credit.activity.UserInfoActivity;
 import com.phoenix.credit.bean.User;
 import com.phoenix.credit.common.AppNetConfig;
@@ -113,6 +114,8 @@ public class MeFragment extends BaseFragment {
             public Bitmap transform(Bitmap source) {//下载以后的内存中的Bitmap对象
                 //压缩处理
                 Bitmap bitmap = BitmapUtils.zoom(source, UIUtils.dp2px(62), UIUtils.dp2px(62));
+                //保存到本地
+                BitmapUtils.saveImage(bitmap);
                 //圆形处理
                 bitmap = BitmapUtils.circleBitmap(source);
                 //回收Bitmap资源
@@ -170,5 +173,17 @@ public class MeFragment extends BaseFragment {
             return true;
         }
         return false;
+    }
+
+    //设置充值操作
+    @OnClick(R2.id.recharge)
+    public void recharge(View view){
+        ((BaseActivity)this.getActivity()).goToActivity(RechargeActivity.class, null);
+    }
+
+    //设置提现操作
+    @OnClick(R2.id.recharge)
+    public void withdraw(View view){
+
     }
 }

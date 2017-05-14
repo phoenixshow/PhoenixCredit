@@ -17,7 +17,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
-    <!--支付宝权限-->
+    <!-- 支付宝权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -43,7 +43,8 @@
             android:name=".activity.MainActivity"
             android:theme="@style/StyledIndicators" />
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.UserInfoActivity"/>
+        <activity android:name=".activity.UserInfoActivity" />
+        <activity android:name=".activity.RechargeActivity"/>
 
         <!-- alipay sdk begin -->
         <activity
@@ -51,15 +52,13 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <!-- alipay sdk end -->
     </application>
 

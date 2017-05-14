@@ -47,21 +47,22 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 
+import static com.phoenix.credit.utils.BitmapUtils.saveImage;
+
 public class UserInfoActivity extends BaseActivity {
-    private final int SDK_PERMISSION_REQUEST = 127;
     private static final int PICTURE = 100;
     private static final int CAMERA = 200;
-    @BindView(R.id.iv_title_back)
+    @BindView(R2.id.iv_title_back)
     ImageView ivTitleBack;
-    @BindView(R.id.tv_title)
+    @BindView(R2.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.iv_title_setting)
+    @BindView(R2.id.iv_title_setting)
     ImageView ivTitleSetting;
-    @BindView(R.id.iv_user_icon)
+    @BindView(R2.id.iv_user_icon)
     ImageView ivUserIcon;
-    @BindView(R.id.btn_user_logout)
+    @BindView(R2.id.btn_user_logout)
     Button btnUserLogout;
-    @BindView(R.id.tv_user_change)
+    @BindView(R2.id.tv_user_change)
     TextView tvUserChange;
 
     @Override
@@ -79,7 +80,7 @@ public class UserInfoActivity extends BaseActivity {
         ivTitleSetting.setVisibility(View.INVISIBLE);
     }
 
-    @OnClick(R.id.iv_title_back)
+    @OnClick(R2.id.iv_title_back)
     public void back(View view){
         //销毁当前页面
         this.removeCurrentActivity();
@@ -114,45 +115,6 @@ public class UserInfoActivity extends BaseActivity {
 
     @OnClick(R2.id.tv_user_change)
     public void changeIcon(View view) {
-        getPersimmions();
-    }
-
-    @TargetApi(23)
-    private void getPersimmions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ArrayList<String> permissions = new ArrayList<>();
-            if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-                permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-            }
-
-            if (permissions.size() > 0) {
-                requestPermissions(permissions.toArray(new String[permissions.size()]), SDK_PERMISSION_REQUEST);
-            }else {
-                showDialog();
-            }
-        }else {
-            showDialog();
-        }
-    }
-
-    @TargetApi(23)
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
-            case SDK_PERMISSION_REQUEST:
-                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    // 允许
-                    showDialog();
-                }else{
-                    // 不允许
-                    UIUtils.toast("已拒绝授权", true);
-                }
-                break;
-        }
-    }
-
-    public void showDialog(){
         String[] items = new String[]{"图库", "相机"};
         //提供一个AlertDialog
         new AlertDialog.Builder(this)
@@ -222,7 +184,7 @@ public class UserInfoActivity extends BaseActivity {
             uploadImage(zoomBitmap);
 
             //保存到本地
-            saveImage(zoomBitmap);
+            BitmapUtils.saveImage(zoomBitmap);
         }
     }
 
@@ -252,43 +214,6 @@ public class UserInfoActivity extends BaseActivity {
                 Log.e("TAG", "onFailure--------->上传失败" + arg3.getMessage().toString());
             }
         });
-    }
-
-    /**
-     * 将Bitmap保存到本地的操作——数据的存储（5种）
-     * Bitmap：内存层面的图片对象
-     * 存储-->内存：
-     *      BitmapFactory.decodeFile(String filePath);
-     *      BitmapFactory.decodeStream(InputStream is);
-     * 内存-->存储：
-     *      bitmap.compress(Bitmap.CompressFormat.PNG, 100, OutputStream os);
-     */
-    private void saveImage(Bitmap bitmap) {
-        File filesDir;
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){//判断SD卡是否挂载
-            //路径1：storage/sdcard/Android/data/包名/files
-            filesDir = this.getExternalFilesDir("");
-        }else {//手机内部存储
-            //路径：data/data/包名/files
-            filesDir = this.getFilesDir();
-        }
-//        Log.e("TAG", "saveImage--------->filesDir:" + filesDir);
-        FileOutputStream fos = null;
-        try {
-            File file = new File(filesDir, "tx.png");
-            fos = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            if (fos != null){
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     /**

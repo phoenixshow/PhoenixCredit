@@ -1,5 +1,9 @@
 package com.phoenix.credit.activity;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -26,12 +30,15 @@ import com.phoenix.credit.fragment.MeFragment;
 import com.phoenix.credit.fragment.MoreFragment;
 import com.phoenix.credit.utils.UIUtils;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
 
+    private final int SDK_PERMISSION_REQUEST = 127;
     private static final int WHAT_RESET_BACK = 1;
 
     @BindView(R2.id.fl_main)
@@ -81,8 +88,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        //默认显示首页
-        setSelect(0);
+        getPersimmions();
 
         /*//模拟异常
         String str = null;
@@ -223,5 +229,49 @@ public class MainActivity extends BaseActivity {
 //        handler.removeMessages(WHAT_RESET_BACK);
         //方式二：移除所有的未被执行的消息
         handler.removeCallbacksAndMessages(null);
+    }
+
+    @TargetApi(23)
+    private void getPersimmions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ArrayList<String> permissions = new ArrayList<>();
+            if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+            if(checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
+                permissions.add(Manifest.permission.READ_PHONE_STATE);
+            }
+            if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            }
+
+            if (permissions.size() > 0) {
+                requestPermissions(permissions.toArray(new String[permissions.size()]), SDK_PERMISSION_REQUEST);
+            }else {
+                //默认显示首页
+                setSelect(0);
+            }
+        }else {
+            //默认显示首页
+            setSelect(0);
+        }
+    }
+
+    @TargetApi(23)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case SDK_PERMISSION_REQUEST:
+                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    // 允许
+                    //默认显示首页
+                    setSelect(0);
+                }else{
+                    // 不允许
+                    UIUtils.toast("已拒绝授权", true);
+                }
+                break;
+        }
     }
 }

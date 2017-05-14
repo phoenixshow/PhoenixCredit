@@ -14,6 +14,9 @@ import com.phoenix.credit.common.PhoenixApplication;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import static android.graphics.Bitmap.createBitmap;
 
@@ -88,5 +91,42 @@ public class BitmapUtils {
             return bitmap;
         }
         return null;
+    }
+
+    /**
+     * 将Bitmap保存到本地的操作——数据的存储（5种）
+     * Bitmap：内存层面的图片对象
+     * 存储-->内存：
+     *      BitmapFactory.decodeFile(String filePath);
+     *      BitmapFactory.decodeStream(InputStream is);
+     * 内存-->存储：
+     *      bitmap.compress(Bitmap.CompressFormat.PNG, 100, OutputStream os);
+     */
+    public static void saveImage(Bitmap bitmap) {
+        File filesDir;
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){//判断SD卡是否挂载
+            //路径1：storage/sdcard/Android/data/包名/files
+            filesDir = PhoenixApplication.context.getExternalFilesDir("");
+        }else {//手机内部存储
+            //路径：data/data/包名/files
+            filesDir = PhoenixApplication.context.getFilesDir();
+        }
+//        Log.e("TAG", "saveImage--------->filesDir:" + filesDir);
+        FileOutputStream fos = null;
+        try {
+            File file = new File(filesDir, "tx.png");
+            fos = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null){
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
