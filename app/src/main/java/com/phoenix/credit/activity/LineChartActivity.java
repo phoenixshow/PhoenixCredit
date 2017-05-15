@@ -63,7 +63,7 @@ public class LineChartActivity extends BaseActivity {
         //是否绘制X轴的轴线（每个区间节点的横向线）
         xAxis.setDrawAxisLine(true);
 
-        //获取当前的Y轴对象
+        //获取左边的Y轴对象
         YAxis leftAxis = lineChart.getAxisLeft();
         //设置左边Y轴的字体
         leftAxis.setTypeface(mTf);
