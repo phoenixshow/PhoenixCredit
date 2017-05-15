@@ -16,9 +16,13 @@ import android.widget.TextView;
 import com.loopj.android.http.RequestParams;
 import com.phoenix.credit.R;
 import com.phoenix.credit.R2;
+import com.phoenix.credit.activity.BarChartActivity;
+import com.phoenix.credit.activity.LineChartActivity;
 import com.phoenix.credit.activity.LoginActivity;
+import com.phoenix.credit.activity.PieChartActivity;
 import com.phoenix.credit.activity.RechargeActivity;
 import com.phoenix.credit.activity.UserInfoActivity;
+import com.phoenix.credit.activity.WithdrawActivity;
 import com.phoenix.credit.bean.User;
 import com.phoenix.credit.common.AppNetConfig;
 import com.phoenix.credit.common.BaseActivity;
@@ -56,11 +60,11 @@ public class MeFragment extends BaseFragment {
     ImageView recharge;
     @BindView(R2.id.withdraw)
     ImageView withdraw;
-    @BindView(R2.id.ll_touzi)
+    @BindView(R2.id.ll_investment)
     TextView llTouzi;
-    @BindView(R2.id.ll_touzi_zhiguan)
+    @BindView(R2.id.ll_investment_intuition)
     TextView llTouziZhiguan;
-    @BindView(R2.id.ll_zichan)
+    @BindView(R2.id.ll_assets)
     TextView llZichan;
 
     @Override
@@ -182,8 +186,26 @@ public class MeFragment extends BaseFragment {
     }
 
     //设置提现操作
-    @OnClick(R2.id.recharge)
+    @OnClick(R2.id.withdraw)
     public void withdraw(View view){
+        ((BaseActivity)this.getActivity()).goToActivity(WithdrawActivity.class, null);
+    }
 
+    //启动折线图
+    @OnClick(R2.id.ll_investment)
+    public void startLineChart(View view){
+        ((BaseActivity)this.getActivity()).goToActivity(LineChartActivity.class, null);
+    }
+
+    //启动柱状图
+    @OnClick(R2.id.ll_investment_intuition)
+    public void startBarChart(View view){
+      ((BaseActivity)this.getActivity()).goToActivity(BarChartActivity.class, null);
+    }
+
+    //启动饼图
+    @OnClick(R2.id.ll_assets)
+    public void startPieChart(View view){
+        ((BaseActivity)this.getActivity()).goToActivity(PieChartActivity.class, null);
     }
 }

@@ -142,7 +142,7 @@ public class RechargeActivity extends BaseActivity {
         return R.layout.activity_recharge;
     }
 
-    @OnClick(R.id.btn_recharge)
+    @OnClick(R2.id.btn_recharge)
     public void recharge(View view){
         // 订单
         String orderInfo = getOrderInfo("iphone 7 plus 256G", "史上配置最高的水果手机", "0.01");
