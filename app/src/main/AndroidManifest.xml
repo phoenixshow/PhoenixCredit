@@ -63,7 +63,8 @@
         <activity android:name=".activity.WithdrawActivity" />
         <activity android:name=".activity.LineChartActivity" />
         <activity android:name=".activity.BarChartActivity" />
-        <activity android:name=".activity.PieChartActivity"></activity>
+        <activity android:name=".activity.PieChartActivity" />
+        <activity android:name=".activity.UserRegistActivity"></activity>
     </application>
 
 </manifest>
