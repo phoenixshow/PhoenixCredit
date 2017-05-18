@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
+import cn.sharesdk.framework.ShareSDK;
+
 /**
  * Created by flashing on 2017/4/29.
  */
@@ -27,5 +29,8 @@ public class PhoenixApplication extends Application {
 
 //        //设置未捕获异常的处理器
 //        CrashHandler.getInstance().init();
+
+        //初始化ShareSDK
+        ShareSDK.initSDK(this);
     }
 }

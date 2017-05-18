@@ -39,6 +39,7 @@ import com.phoenix.credit.utils.UIUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 import cz.msebera.android.httpclient.Header;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
@@ -111,6 +112,47 @@ public class MoreFragment extends BaseFragment {
 
         //提交反馈意见
         commitFeedback();
+
+        //分享
+        share();
+    }
+
+    private void share() {
+        tvMoreShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showShare();
+            }
+        });
+    }
+
+    private void showShare() {
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+        // title标题，印象笔记、邮箱、信息、微信、人人网、QQ和QQ空间使用
+        oks.setTitle(getString(R.string.app_name));
+        // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
+        oks.setTitleUrl("http://sharesdk.cn");
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText("世界上最遥远的距离，是我在if里你在else里，似乎一直相伴又永远分离；\n" +
+                "世界上最痴心的等待，是我当case你是switch，或许永远都选不上自己；\n" +
+                "世界上最真情的相依，是你在try我在catch。无论你发神马脾气，我都默默承受，静静处理。到那时，再来期待我们的finally~");
+        //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
+        oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+        //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+        // url仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl("http://sharesdk.cn");
+        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        oks.setComment("word天哪，精辟的不要不要的！");
+        // site是分享此内容的网站名称，仅在QQ空间使用
+        oks.setSite("ShareSDK");
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl("http://sharesdk.cn");
+
+        // 启动分享GUI
+        oks.show(MoreFragment.this.getActivity());
     }
 
     private void commitFeedback() {
