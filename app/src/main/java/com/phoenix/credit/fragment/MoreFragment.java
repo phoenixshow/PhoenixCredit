@@ -9,22 +9,29 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.phoenix.credit.R;
 import com.phoenix.credit.R2;
 import com.phoenix.credit.activity.GestureEditActivity;
 import com.phoenix.credit.activity.UserRegistActivity;
+import com.phoenix.credit.common.AppNetConfig;
 import com.phoenix.credit.common.BaseActivity;
 import com.phoenix.credit.common.BaseFragment;
 import com.phoenix.credit.utils.UIUtils;
@@ -32,6 +39,9 @@ import com.phoenix.credit.utils.UIUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cz.msebera.android.httpclient.Header;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 /**
  * Created by flashing on 2017/4/28.
@@ -62,6 +72,7 @@ public class MoreFragment extends BaseFragment {
     TextView tvMorePhone;
 
     private SharedPreferences sp;
+    private String department = "不明确";
 
     @Override
     protected int getLayoutId() {
@@ -97,6 +108,57 @@ public class MoreFragment extends BaseFragment {
 
         //联系客服
         contactService();
+
+        //提交反馈意见
+        commitFeedback();
+    }
+
+    private void commitFeedback() {
+        tvMoreSms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View view = View.inflate(MoreFragment.this.getActivity(), R.layout.view_feedback, null);
+                final RadioGroup rg = (RadioGroup) view.findViewById(R.id.rg_feedback);
+                final EditText et = (EditText) view.findViewById(R.id.et_feedback_content);
+
+                rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                        RadioButton rb = (RadioButton) rg.findViewById(checkedId);
+                        department = rb.getText().toString();
+                    }
+                });
+
+                new AlertDialog.Builder(MoreFragment.this.getActivity())
+                        .setView(view)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //获取反馈的信息
+                                String content = et.getText().toString().trim();
+                                //联网发送反馈信息
+                                AsyncHttpClient client = new AsyncHttpClient();
+                                String url = AppNetConfig.FEEDBACK;
+                                RequestParams params = new RequestParams();
+                                params.put("department", department);
+                                params.put("content", content);
+                                client.post(url, params, new AsyncHttpResponseHandler() {
+                                    @Override
+                                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                        UIUtils.toast("发送反馈信息成功", false);
+                                    }
+
+                                    @Override
+                                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                        UIUtils.toast("发送反馈信息失败", false);
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("取消", null)
+                        .show();
+            }
+        });
     }
 
     private void contactService() {
