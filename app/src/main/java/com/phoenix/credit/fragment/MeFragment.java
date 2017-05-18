@@ -17,6 +17,7 @@ import com.loopj.android.http.RequestParams;
 import com.phoenix.credit.R;
 import com.phoenix.credit.R2;
 import com.phoenix.credit.activity.BarChartActivity;
+import com.phoenix.credit.activity.GestureVerifyActivity;
 import com.phoenix.credit.activity.LineChartActivity;
 import com.phoenix.credit.activity.LoginActivity;
 import com.phoenix.credit.activity.PieChartActivity;
@@ -132,6 +133,15 @@ public class MeFragment extends BaseFragment {
                 return "";//需要保证返回值不能为空，否则报错
             }
         }).into(ivMeIcon);
+
+        //判断是否开启了手势密码，如果开启先输入手势密码
+        SharedPreferences sp = this.getActivity().getSharedPreferences("secret_protect", Context.MODE_PRIVATE);
+        boolean isOpen = sp.getBoolean("isOpen", false);
+        if (isOpen){
+            ((BaseActivity)this.getActivity()).goToActivity(GestureVerifyActivity.class, null);
+            return;
+        }
+
     }
 
     //给出提示：登录

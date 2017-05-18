@@ -45,6 +45,13 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.UserInfoActivity" />
         <activity android:name=".activity.RechargeActivity" />
+        <activity android:name=".activity.WithdrawActivity" />
+        <activity android:name=".activity.LineChartActivity" />
+        <activity android:name=".activity.BarChartActivity" />
+        <activity android:name=".activity.PieChartActivity" />
+        <activity android:name=".activity.UserRegistActivity"/>
+        <activity android:name=".activity.GestureEditActivity"/>
+        <activity android:name=".activity.GestureVerifyActivity"/>
 
         <!-- alipay sdk begin -->
         <activity
@@ -60,11 +67,6 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <!-- alipay sdk end -->
-        <activity android:name=".activity.WithdrawActivity" />
-        <activity android:name=".activity.LineChartActivity" />
-        <activity android:name=".activity.BarChartActivity" />
-        <activity android:name=".activity.PieChartActivity" />
-        <activity android:name=".activity.UserRegistActivity"></activity>
     </application>
 
 </manifest>
