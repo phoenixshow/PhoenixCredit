@@ -30,6 +30,7 @@ import com.loopj.android.http.RequestParams;
 import com.phoenix.credit.R;
 import com.phoenix.credit.R2;
 import com.phoenix.credit.activity.GestureEditActivity;
+import com.phoenix.credit.activity.HXDInvestActivity;
 import com.phoenix.credit.activity.UserRegistActivity;
 import com.phoenix.credit.common.AppNetConfig;
 import com.phoenix.credit.common.BaseActivity;
@@ -43,6 +44,7 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 import cz.msebera.android.httpclient.Header;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+import static android.os.Build.VERSION_CODES.M;
 
 /**
  * Created by flashing on 2017/4/28.
@@ -115,6 +117,18 @@ public class MoreFragment extends BaseFragment {
 
         //分享
         share();
+
+        //关于惠信贷
+        aboutInvest();
+    }
+
+    private void aboutInvest() {
+        tvMoreAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((BaseActivity)MoreFragment.this.getActivity()).goToActivity(HXDInvestActivity.class, null);
+            }
+        });
     }
 
     private void share() {
