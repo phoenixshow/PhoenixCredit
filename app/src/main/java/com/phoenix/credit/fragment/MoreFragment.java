@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,6 +77,7 @@ public class MoreFragment extends BaseFragment {
 
     private SharedPreferences sp;
     private String department = "不明确";
+    private static int REQUESTPERMISSION = 110 ;
 
     @Override
     protected int getLayoutId() {
@@ -227,22 +229,46 @@ public class MoreFragment extends BaseFragment {
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //获取手机号码
-                                String phone = tvMorePhone.getText().toString().trim();
-                                //使用隐式意图，启动系统拨号应用界面
-                                Intent intent = new Intent(Intent.ACTION_CALL);
-                                intent.setData(Uri.parse("tel:" + phone));
-                                if (ActivityCompat.checkSelfPermission(MoreFragment.this.getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                                    UIUtils.toast("您还未授予拨打电话的权限哦~", true);
-                                    return;
+                                if(ContextCompat.checkSelfPermission(MoreFragment.this.getActivity(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
+                                    //申请权限
+                                    ActivityCompat.requestPermissions(MoreFragment.this.getActivity(), new String[]{Manifest.permission.READ_PHONE_STATE}, REQUESTPERMISSION);
+                                }else{
+                                    callPhone();
                                 }
-                                MoreFragment.this.getActivity().startActivity(intent);
                             }
                         })
                         .setNegativeButton("取消", null)
                         .show();
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==REQUESTPERMISSION){
+            if(permissions[0].equals(Manifest.permission.READ_PHONE_STATE)){
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    UIUtils.toast("授权成功", false);
+                    callPhone();
+                }else{
+                    UIUtils.toast("没有权限，联系不了客服咯~", false);
+                }
+            }
+        }
+    }
+
+    private void callPhone() {
+        //获取手机号码
+        String phone = tvMorePhone.getText().toString().trim();
+        //使用隐式意图，启动系统拨号应用界面
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:" + phone));
+        if (ActivityCompat.checkSelfPermission(MoreFragment.this.getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            UIUtils.toast("您还未授予拨打电话的权限哦~", true);
+            return;
+        }
+        MoreFragment.this.getActivity().startActivity(intent);
     }
 
     private void resetGesture() {

@@ -88,7 +88,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        getPersimmions();
+//        getPersimmions();
+        //默认显示首页
+        setSelect(0);
 
         /*//模拟异常
         String str = null;
@@ -176,7 +178,8 @@ public class MainActivity extends BaseActivity {
                 tvMainMore.setTextColor(UIUtils.getColor(R.color.home_back_selected));
                 break;
         }
-        transaction.commit();//提交事务
+//        transaction.commit();//提交事务
+        transaction.commitAllowingStateLoss();//提交事务
     }
 
     private void resetTab() {
@@ -231,47 +234,41 @@ public class MainActivity extends BaseActivity {
         handler.removeCallbacksAndMessages(null);
     }
 
-    @TargetApi(23)
-    private void getPersimmions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ArrayList<String> permissions = new ArrayList<>();
-            if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-                permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-            }
-            if(checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
-                permissions.add(Manifest.permission.READ_PHONE_STATE);
-            }
-            if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-                permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
-            }
-
-            if (permissions.size() > 0) {
-                requestPermissions(permissions.toArray(new String[permissions.size()]), SDK_PERMISSION_REQUEST);
-            }else {
-                //默认显示首页
-                setSelect(0);
-            }
-        }else {
-            //默认显示首页
-            setSelect(0);
-        }
-    }
-
-    @TargetApi(23)
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
-            case SDK_PERMISSION_REQUEST:
-                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    // 允许
-                    //默认显示首页
-                    setSelect(0);
-                }else{
-                    // 不允许
-                    UIUtils.toast("已拒绝授权", true);
-                }
-                break;
-        }
-    }
+//    @TargetApi(23)
+//    private void getPersimmions() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            ArrayList<String> permissions = new ArrayList<>();
+//            if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+//                permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+//            }
+//
+//            if (permissions.size() > 0) {
+//                requestPermissions(permissions.toArray(new String[permissions.size()]), SDK_PERMISSION_REQUEST);
+//            }else {
+//                //默认显示首页
+//                setSelect(0);
+//            }
+//        }else {
+//            //默认显示首页
+//            setSelect(0);
+//        }
+//    }
+//
+//    @TargetApi(23)
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        switch (requestCode){
+//            case SDK_PERMISSION_REQUEST:
+//                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+//                    // 允许
+//                    //默认显示首页
+//                    setSelect(0);
+//                }else{
+//                    // 不允许
+//                    UIUtils.toast("已拒绝授权", true);
+//                }
+//                break;
+//        }
+//    }
 }
