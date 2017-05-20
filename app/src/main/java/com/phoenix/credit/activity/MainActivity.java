@@ -2,6 +2,7 @@ package com.phoenix.credit.activity;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.zgj.multiChannelPackageTool.MCPTool;
 import com.phoenix.credit.R;
 import com.phoenix.credit.R2;
 import com.phoenix.credit.common.ActivityManager;
@@ -28,6 +30,7 @@ import com.phoenix.credit.fragment.HomeFragment;
 import com.phoenix.credit.fragment.InvestFragment;
 import com.phoenix.credit.fragment.MeFragment;
 import com.phoenix.credit.fragment.MoreFragment;
+import com.phoenix.credit.utils.ChannelUtil;
 import com.phoenix.credit.utils.UIUtils;
 
 import java.util.ArrayList;
@@ -97,6 +100,28 @@ public class MainActivity extends BaseActivity {
         if (str.equals("abc")){
             Log.e("TAG", "onCreate--------->");
         }*/
+
+        //显示来自于哪个渠道的应用
+        String channel = getChannel();
+        UIUtils.toast(channel, false);
+
+        //美团的多渠道打包_获取渠道信息
+        String channel_meituan = ChannelUtil.getChannel(this, "yingyongbao");
+        UIUtils.toast(channel_meituan, false);
+
+        //360的多渠道打包_获取渠道信息，参数第二个是密码，第三个是默认值
+        String channel_360 = MCPTool.getChannelId(this,"12345678","");
+        UIUtils.toast(channel_meituan, false);
+    }
+
+    private String getChannel() {
+        try {
+            PackageManager pm = getPackageManager();
+            ApplicationInfo appInfo = pm.getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+            return appInfo.metaData.getString("UMENG_CHANNEL");
+        } catch (PackageManager.NameNotFoundException ignored) {
+        }
+        return "";
     }
 
     @Override
